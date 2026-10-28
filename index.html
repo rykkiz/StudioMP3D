@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>StudioMP3D – Arquivos STL e modelos impressos em 3D</title>
+<meta name="description" content="Do arquivo STL ao modelo na sua mão. Download imediato de STL ou entrega física para todo o Brasil.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;800&family=IBM+Plex+Sans:wght@400;500&display=swap">
+<style>
+:root{--bg:#03060c;--card:#0b1322;--ink:#eef2f8;--mute:#93a1b8;--acc:#1f6bff;--onacc:#fff;--line:#16233b;--hi:#c3cfe0;--ok:#22c55e;--hot:#ff4d5e;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:120px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+/* header */
+header{position:sticky;top:0;background:rgba(3,6,12,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);z-index:5}
+.top{display:flex;align-items:center;gap:14px;height:64px}
+.logo{display:flex;align-items:center;gap:8px;font:800 22px "Bricolage Grotesque",sans-serif;color:var(--hi);text-decoration:none;white-space:nowrap}
+.logo img{height:40px;width:auto;mix-blend-mode:screen}.logo b{color:var(--acc);font-weight:800}
+.search{flex:1;max-width:420px;margin-left:auto;position:relative}
+.search input{width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:9px 16px;font:inherit}
+.search input::placeholder{color:var(--mute)}
+.actions{display:flex;gap:8px}
+.ibtn{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:8px 14px;white-space:nowrap}
+.ibtn.pri{background:var(--acc);border-color:var(--acc);color:var(--onacc)}
+nav.menu{border-top:1px solid var(--line)}
+nav.menu .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+nav.menu button{background:none;border:0;color:var(--mute);padding:12px 14px;white-space:nowrap;border-bottom:2px solid transparent}
+nav.menu button:hover{color:var(--ink)}
+nav.menu button[aria-pressed="true"]{color:var(--ink);border-color:var(--acc)}
+
+/* hero */
+.hero{padding:56px 0;text-align:center;background:radial-gradient(ellipse at 85% 30%,rgba(31,107,255,.35),transparent 55%),repeating-linear-gradient(0deg,transparent 0 11px,var(--line) 11px 12px)}
+.logo.big{justify-content:center;font-size:clamp(40px,9vw,84px);gap:16px}.logo.big img{height:clamp(70px,14vw,130px)}
+.herologo{display:block;position:relative;width:min(560px,100%);aspect-ratio:550/435;overflow:hidden;margin:0 auto}.herologo img{mix-blend-mode:screen;position:absolute;width:144.5%;max-width:none;left:-23.6%;top:-41.4%}
+.mark{display:block;position:relative;height:44px;aspect-ratio:310/290;overflow:hidden;flex:none}.mark img{position:absolute;mix-blend-mode:screen;max-width:none;height:auto;width:256.5%;left:-80.6%;top:-67.2%}
+.tag{display:inline-block;border:1px solid var(--acc);color:var(--ink);padding:2px 12px;border-radius:4px;font-size:13px;letter-spacing:.06em;margin-bottom:16px}
+.hero h1{font-size:clamp(38px,7vw,78px);font-weight:800;max-width:16ch;color:var(--hi)}
+.hero h1 em{font-style:normal;color:var(--acc)}
+.hero p{max-width:50ch;color:var(--mute);font-size:18px;margin:18px 0 26px}
+.cta{box-shadow:0 0 22px rgba(31,107,255,.5);background:var(--acc);color:var(--onacc);border:0;border-radius:6px;padding:12px 22px;font-weight:500;text-decoration:none;display:inline-block}
+.badges{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;color:var(--mute);font-size:14px;list-style:none;padding:0}
+.badges li::before{content:"✓ ";color:var(--ok)}
+
+/* shop */
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between;margin:44px 0 18px}
+.bar h2{font-size:clamp(26px,4vw,36px);color:var(--hi)}
+.bar p{margin:6px 0 0;color:var(--mute)}
+.sort{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font:inherit}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:18px;padding-bottom:16px}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column;transition:border-color .2s,transform .2s}
+.card:hover{border-color:#2a2e3a;transform:translateY(-2px)}
+.thumb{position:relative;overflow:hidden;display:grid;aspect-ratio:4/5;color:inherit;place-items:center;font-size:62px;background:linear-gradient(180deg,#15171e,#0a0b10)}
+.thumb.ph{display:block;background:#0a0b10}
+.thumb.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 65%;display:block}
+.pill{position:absolute;left:10px;top:10px;font-size:12px;font-weight:500;padding:2px 9px;border-radius:999px;background:rgba(3,6,12,.75);border:1px solid var(--line)}
+.pill.stl{color:#7fb0ff}.pill.fis{color:#ffd37a}
+.off{position:absolute;left:10px;bottom:10px;background:var(--hot);color:#fff;font-size:12px;font-weight:500;padding:1px 8px;border-radius:4px}
+.fav{position:absolute;right:8px;top:8px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:rgba(3,6,12,.75);color:var(--ink);font-size:17px;line-height:1}
+.fav[aria-pressed="true"]{color:var(--hot);border-color:var(--hot)}
+.card .body{padding:14px;display:flex;flex-direction:column;gap:4px;flex:1}
+.card h3{font-size:19px;font-weight:500}.card h3 a{text-decoration:none}.card h3 a:hover{color:var(--hi)}
+.card small{color:var(--mute)}
+.row{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px;gap:8px}
+.price{font:800 20px "Bricolage Grotesque",sans-serif}
+.price s{display:block;font:400 12px "IBM Plex Sans",sans-serif;color:var(--mute)}
+.add{background:var(--acc);color:var(--onacc);border:0;border-radius:6px;padding:8px 12px}
+.crumb{font-size:13px;color:var(--mute);margin:24px 0 18px}.crumb a{text-decoration:none}.crumb a:hover{color:var(--ink)}
+.pgrid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:32px;align-items:start}
+.gal .stage{position:relative;aspect-ratio:2/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;display:grid;place-items:center;font-size:120px}
+.gal .stage img,.gal .stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block;background:#0a0b10}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(3,6,12,.75);color:var(--ink);font-size:20px;line-height:1}.gnav.l{left:10px}.gnav.r{right:10px}
+.gcount{position:absolute;right:10px;bottom:10px;background:rgba(3,6,12,.75);border:1px solid var(--line);border-radius:999px;padding:1px 10px;font-size:12px}
+.thumbs{display:flex;gap:8px;margin-top:10px;overflow-x:auto;padding-bottom:4px}
+.thumbs button{flex:none;width:72px;aspect-ratio:1;border:2px solid var(--line);border-radius:6px;background:#0a0b10 center/cover no-repeat;color:var(--ink);padding:0;overflow:hidden;font-size:22px}
+.thumbs button[aria-pressed="true"]{border-color:var(--acc)}
+.pinfo .ctag{font-size:12px;color:#7fb0ff;text-transform:uppercase;letter-spacing:.06em}
+.pinfo h1{font-size:clamp(26px,4vw,38px);margin:6px 0 12px;color:var(--hi)}
+.pprice{font:800 32px "Bricolage Grotesque",sans-serif}.pprice s{font:400 14px "IBM Plex Sans",sans-serif;color:var(--mute);margin-left:8px}
+.pbox{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin:16px 0;font-size:14px;color:var(--mute)}.pbox b{color:var(--ink)}
+.pbtns{display:flex;gap:10px}.pbtns .cta{flex:1;border:0;padding:14px 22px;font-size:16px}.fav2{width:50px;border-radius:6px;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px}.fav2[aria-pressed="true"]{color:var(--hot);border-color:var(--hot)}
+.desc{margin-top:22px;border-top:1px solid var(--line);padding-top:16px}.desc h3{font-size:18px;margin-bottom:10px}.desc ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;color:var(--mute);font-size:15px}.desc li::before{content:"✓ ";color:var(--ok)}
+.rel{margin:44px 0 0}.rel h2{font-size:22px;margin-bottom:14px;color:var(--hi)}
+@media (max-width:760px){.pgrid{grid-template-columns:1fr}}
+.none{color:var(--mute);padding:20px 0}
+
+/* info + contact + footer */
+.info{background:var(--card);border-top:1px solid var(--line);padding:40px 0;margin-top:40px}
+.info .wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:24px}
+.info h2{font-size:22px;margin-bottom:6px}.info p{margin:0;color:var(--mute)}
+.contact{padding:48px 20px}.contact h2{font-size:clamp(26px,5vw,38px);color:var(--hi)}.contact p{color:var(--mute);margin:8px 0 20px;max-width:55ch}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-block;text-decoration:none;border-radius:6px;padding:12px 22px;font-weight:500;border:1px solid var(--acc);color:var(--ink)}
+.btn.fill{background:var(--acc);color:var(--onacc);box-shadow:0 0 22px rgba(31,107,255,.5)}
+footer{border-top:1px solid var(--line);padding:36px 0 20px;color:var(--mute);font-size:14px}
+footer .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px}
+footer h4{margin:0 0 10px;color:var(--ink);font:500 15px "IBM Plex Sans",sans-serif}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+footer a{text-decoration:none}footer a:hover{color:var(--ink)}
+footer .copy{margin-top:26px;padding-top:16px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:8px 20px;justify-content:space-between}
+.wa-float{position:fixed;right:18px;bottom:18px;width:54px;height:54px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;font-size:26px;text-decoration:none;box-shadow:0 6px 20px rgba(0,0,0,.5);z-index:4}
+
+/* cart */
+aside{position:fixed;top:0;right:0;bottom:0;width:min(400px,100%);background:var(--card);border-left:1px solid var(--line);padding:20px;transform:translateX(100%);transition:transform .25s;z-index:10;display:flex;flex-direction:column;visibility:hidden}
+aside.open{transform:none;visibility:visible}
+aside h2{font-size:24px;margin-bottom:12px}
+#items{flex:1;overflow:auto}
+.it{display:flex;justify-content:space-between;gap:8px;padding:10px 0;border-bottom:1px solid var(--line)}
+.qty{white-space:nowrap}
+.qty button{width:26px;height:26px;border:1px solid var(--line);background:transparent;color:var(--ink);border-radius:4px}
+.empty{color:var(--mute)}
+.note{font-size:13px;color:var(--mute);margin:0 0 8px}
+.total{display:flex;justify-content:space-between;font-weight:500;padding:14px 0}
+.close{align-self:flex-end;background:none;border:0;color:var(--ink);font-size:24px;margin-bottom:-8px}
+.cta.full{width:100%;border:0}
+#veil{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9;opacity:0;pointer-events:none;transition:opacity .25s}
+#veil.on{opacity:1;pointer-events:auto}
+@media (max-width:640px){.search{order:3;flex-basis:100%;max-width:none;margin:0}.top{flex-wrap:wrap;height:auto;padding:10px 20px}.actions{margin-left:auto}html{scroll-padding-top:170px}}
+@media (prefers-reduced-motion:reduce){aside,.card,#veil,html{transition:none;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap top">
+    <a class="logo" href="#"><span class="mark"><img src="logo-studio.jpg" alt=""></span>Studio<b>MP3D</b></a>
+    <label class="search"><span hidden>Buscar modelos</span><input id="q" type="search" placeholder="Buscar modelos…" autocomplete="off"></label>
+    <div class="actions">
+      <button class="ibtn" id="favbtn" aria-label="Ver favoritos">♥ <span id="fn">0</span></button>
+      <button class="ibtn pri" id="open">Carrinho (<span id="n">0</span>)</button>
+    </div>
+  </div>
+  <nav class="menu" aria-label="Categorias"><div class="wrap" id="menu"></div></nav>
+</header>
+
+<main>
+<section class="wrap" id="viewProd" hidden></section>
+<div id="viewShop">
+
+
+<section class="wrap" id="loja">
+  <div class="bar">
+    <div><h2 id="ttl">Todos os modelos</h2><p id="sub"></p></div>
+    <label>Ordenar <select class="sort" id="sort"><option value="3">Nome (A–Z)</option><option value="1">Menor preço</option><option value="2">Maior preço</option></select></label>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section class="wrap" id="favs">
+  <div class="bar"><div><h2>Seus favoritos</h2></div></div>
+  <div class="grid" id="favgrid"></div>
+</section>
+
+<section class="info"><div class="wrap">
+  <div><h2>Malhas testadas</h2><p>Todo STL é fatiado e impresso antes de entrar na loja.</p></div>
+  <div><h2>Entrega instantânea</h2><p>Arquivos digitais liberados por e-mail logo após o pagamento.</p></div>
+  <div><h2>Acabamento impecável</h2><p>Cada peça física é revisada antes de ser enviada.</p></div>
+  <div><h2>Projetos personalizados</h2><p>Tem uma ideia ou um modelo seu? Envie e receba um orçamento.</p></div>
+</div></section>
+
+<section class="wrap contact" id="contato">
+  <h2>Fale com a gente</h2>
+  <p>Tire dúvidas, peça um orçamento ou envie o seu projeto. Atendemos pelo WhatsApp e pelo Instagram <span id="igname"></span>.</p>
+  <div class="btns"><a class="btn fill" id="wa" target="_blank" rel="noopener">WhatsApp <span id="wanum"></span></a><a class="btn" id="ig" target="_blank" rel="noopener">Instagram</a></div>
+</section>
+</div>
+</main>
+
+<footer><div class="wrap">
+  <div class="cols">
+    <div><a class="logo" href="#"><span class="mark"><img src="logo-studio.jpg" alt=""></span>Studio<b>MP3D</b></a><p>Arquivos STL prontos para imprimir e modelos impressos em 3D, feitos com cuidado.</p></div>
+    <div><h4>Navegue</h4><ul id="fmenu"></ul></div>
+    <div><h4>Atendimento</h4><ul><li><a id="fwa" target="_blank" rel="noopener">WhatsApp</a></li><li><a id="fmail">contato@studiomp3d.com.br</a></li><li><a id="fig" target="_blank" rel="noopener">Instagram</a></li></ul></div>
+    <div><h4>Pagamento &amp; entrega</h4><ul><li>Cartão, Pix e boleto</li><li>Frete calculado no fechamento</li><li>STL liberado por e-mail após o pagamento</li></ul></div>
+  </div>
+  <div class="copy"><span>© 2026 StudioMP3D. Todos os direitos reservados.</span><span>Malhas testadas · Entrega instantânea · Suporte por e-mail</span></div>
+</div></footer>
+
+<a class="wa-float" id="wafloat" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">💬</a>
+
+<div id="veil"></div>
+<aside id="cart" aria-label="Carrinho" aria-hidden="true">
+  <button class="close" id="close" aria-label="Fechar carrinho">×</button>
+  <h2>Seu carrinho</h2>
+  <div id="items"></div>
+  <p class="note">Arquivos STL são enviados por e-mail após o pagamento. Frete dos modelos físicos combinado no WhatsApp.</p>
+  <div class="total"><span>Total</span><span id="total">R$ 0,00</span></div>
+  <button class="cta full" id="buy">Finalizar pelo WhatsApp</button>
+  <button class="ibtn" id="keep" style="margin-top:8px">Continuar comprando</button>
+</aside>
+
+<script>
+// ===== EDITE AQUI =====
+// WhatsApp: só números, com 55 + DDD + número (ex.: 5511999999999)
+var WHATS="5511999999999";
+var INSTAGRAM="https://www.instagram.com/studiomp3d/";
+var EMAIL="contato@studiomp3d.com.br";
+// ======================
+// t: "stl" (download) ou "fis" (modelo impresso) · old: preço antigo (opcional)
+var CATS=["Modelos Físicos","Modelos STL","Mascotes STL","Packs de STL"];
+var P=[
+{id:27,n:"Exterminador",c:"Modelos Físicos",t:"fis",p:130,img:"img/10.webp",d:"PLA multicolorido"},
+{id:28,n:"Donkey Kong",c:"Modelos Físicos",t:"fis",p:200,img:"img/11.webp",d:"PLA multicolorido"},
+{id:29,n:"Rocky Balboa",c:"Modelos Físicos",t:"fis",p:130,z:1.7,img:"img/12.webp",d:"PLA multicolorido"},
+{id:30,n:"Cabeça de abóbora",c:"Modelos Físicos",t:"fis",p:130,img:"img/13.webp",d:"PLA · com luz"},
+{id:21,n:"Rapper de corrente dourada",c:"Modelos Físicos",t:"fis",p:189.9,img:"img/1.jpg",d:"PLA multicolorido · ~30 cm"},
+{id:22,n:"Mike Tyson",c:"Modelos Físicos",t:"fis",p:189.9,img:"img/2.jpg",d:"PLA multicolorido · ~28 cm"},
+{id:23,n:"Homem-Aranha agachado",c:"Modelos Físicos",t:"fis",p:169.9,img:"img/3.jpg",d:"PLA multicolorido · ~25 cm"},
+{id:24,n:"Porco mascote craque verde",c:"Modelos Físicos",t:"fis",p:179.9,img:"img/4.jpg",d:"PLA multicolorido · ~25 cm"},
+];
+var $=function(i){return document.getElementById(i)};
+var brl=function(v){return v.toLocaleString("pt-BR",{style:"currency",currency:"BRL"})};
+var load=function(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}};
+var save=function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+var cart=load("mp3d_cart",{}),favs=load("mp3d_favs",[]),cat="Todos",term="",sortBy="3";
+var byId=function(id){return P.filter(function(p){return p.id==id})[0]};
+
+function drawMenu(){
+  var all=["Todos"].concat(CATS);
+  $("menu").innerHTML=all.map(function(c){return '<button data-c="'+c+'" aria-pressed="'+(c===cat)+'">'+c+'</button>'}).join("");
+  $("fmenu").innerHTML=all.slice(1).map(function(c){return '<li><a href="#loja" data-c="'+c+'">'+c+'</a></li>'}).join("");
+}
+function cardHtml(x){
+  var f=favs.indexOf(x.id)>-1;
+  return '<article class="card"><a class="thumb'+(x.img?' ph':'')+'" href="#p/'+x.id+'" tabindex="-1" aria-hidden="true">'+(x.img?'<img src="'+x.img+'" alt="" loading="lazy"'+zoom(x,"50% 52%")+'>':x.e)+
+    '<span class="pill '+x.t+'">'+(x.t==="stl"?"Download STL":"Físico")+'</span>'+
+    (x.old?'<span class="off">-'+Math.round((1-x.p/x.old)*100)+'%</span>':'')+'</a>'+
+    '<button class="fav" data-f="'+x.id+'" aria-pressed="'+f+'" aria-label="Favoritar '+x.n+'">♥</button>'+
+    '<div class="body"><h3><a href="#p/'+x.id+'">'+x.n+'</a></h3><small>'+x.d+'</small><div class="row"><span class="price">'+(x.old?'<s>'+brl(x.old)+'</s>':'')+brl(x.p)+'</span><button class="add" data-id="'+x.id+'">Adicionar</button></div></div></article>';
+}
+function list(){
+  var l=P.filter(function(x){return (cat==="Todos"||x.c===cat)&&(x.n+" "+x.c+" "+x.d).toLowerCase().indexOf(term)>-1});
+  if(sortBy==="1")l.sort(function(a,b){return a.p-b.p});
+  if(sortBy==="2")l.sort(function(a,b){return b.p-a.p});
+  if(sortBy==="3")l.sort(function(a,b){return a.n.localeCompare(b.n,"pt-BR")});
+  return l;
+}
+function drawGrid(){
+  var l=list();
+  $("ttl").textContent=cat==="Todos"?"Todos os modelos":cat;
+  $("sub").textContent=l.length+(l.length===1?" modelo":" modelos");
+  $("grid").innerHTML=l.length?l.map(cardHtml).join(""):'<p class="none">Nenhum modelo encontrado.</p>';
+  var fl=P.filter(function(x){return favs.indexOf(x.id)>-1});
+  $("favgrid").innerHTML=fl.length?fl.map(cardHtml).join(""):'<p class="none">Nenhum favorito ainda. Toque no ♥ de um modelo para salvar aqui.</p>';
+  $("fn").textContent=fl.length;
+}
+function drawCart(){
+  var ids=Object.keys(cart),count=0,sum=0;
+  $("items").innerHTML=ids.length?ids.map(function(id){
+    var x=byId(id),q=cart[id];count+=q;sum+=q*x.p;
+    return '<div class="it"><div>'+x.n+'<br><small>'+(x.t==="stl"?"STL · ":"Físico · ")+brl(x.p)+'</small></div><div class="qty"><button data-m="'+id+'" aria-label="Diminuir">−</button> '+q+' <button data-a="'+id+'" aria-label="Aumentar">+</button></div></div>';
+  }).join(""):'<p class="empty">Seu carrinho está vazio. Adicione um modelo para começar.</p>';
+  $("n").textContent=count;$("total").textContent=brl(sum);save("mp3d_cart",cart);
+}
+function toggle(o){$("cart").classList.toggle("open",o);$("veil").classList.toggle("on",o);$("cart").setAttribute("aria-hidden",!o)}
+function setCat(c){cat=c;drawMenu();drawGrid()}
+document.addEventListener("click",function(e){
+  var t=e.target.closest("[data-c],[data-id],[data-a],[data-m],[data-f],[data-g],[data-gn]");if(!t)return;
+  var d=t.dataset;
+  if(d.c){setCat(d.c);$("loja").scrollIntoView()}
+  if(d.id){cart[d.id]=(cart[d.id]||0)+1;drawCart();toggle(true)}
+  if(d.a){cart[d.a]++;drawCart()}
+  if(d.m){if(--cart[d.m]<1)delete cart[d.m];drawCart()}
+  if(d.f){var i=+d.f,k=favs.indexOf(i);if(k>-1)favs.splice(k,1);else favs.push(i);save("mp3d_favs",favs);drawGrid();if(curP)drawProduct(curP)}
+  if(d.g){gi=+d.g;drawProduct(curP)}
+  if(d.gn){var n=mediaOf(byId(curP)).length;gi=(gi+(+d.gn)+n)%n;drawProduct(curP)}
+});
+$("q").oninput=function(){term=this.value.trim().toLowerCase();if(curP)location.hash="#loja";drawGrid()};
+$("sort").onchange=function(){sortBy=this.value;drawGrid()};
+$("favbtn").onclick=function(){$("favs").scrollIntoView()};
+$("open").onclick=function(){toggle(true)};
+$("close").onclick=$("keep").onclick=$("veil").onclick=function(){toggle(false)};
+document.addEventListener("keydown",function(e){if(e.key==="Escape")toggle(false)});
+$("buy").onclick=function(){
+  var ids=Object.keys(cart);if(!ids.length)return;
+  var s=0,l=ids.map(function(id){var x=byId(id);s+=cart[id]*x.p;return cart[id]+"x "+x.n+" ("+(x.t==="stl"?"STL":"físico")+")"}).join("\n");
+  window.open("https://wa.me/"+WHATS+"?text="+encodeURIComponent("Olá! Quero fazer este pedido:\n"+l+"\nTotal: "+brl(s)+"\nE-mail para receber os STL: \nCor desejada (físicos): "),"_blank");
+};
+(function(){
+  var d=WHATS.replace(/\D/g,"");
+  var f=d.length===13?"+"+d.slice(0,2)+" ("+d.slice(2,4)+") "+d.slice(4,9)+"-"+d.slice(9):"+"+d;
+  $("wa").href=$("fwa").href=$("wafloat").href="https://wa.me/"+d;$("wanum").textContent="· "+f;
+  $("ig").href=$("fig").href=INSTAGRAM;
+  $("fmail").href="mailto:"+EMAIL;
+  $("igname").textContent="@"+INSTAGRAM.replace(/\/+$/,"").split("/").pop();
+})();
+// ===== página do produto =====
+// Para mais fotos/vídeos de um produto, use m:["img/a.jpg","img/b.jpg","video.mp4"] e, se quiser, desc:["linha 1","linha 2"]
+var curP=0,gi=0;
+var isVid=function(u){return /\.(mp4|webm|ogg)$/i.test(u)};
+function zoom(x,o){return x.z?' style="transform:scale('+x.z+');transform-origin:'+o+'"':''}
+function mediaOf(x){return x.m&&x.m.length?x.m:(x.img?[x.img]:[])}
+function descOf(x){
+  if(x.desc)return x.desc;
+  return x.t==="fis"?["Peça física impressa em 3D, pronta para exposição","Detalhes: "+x.d,"Cores e acabamento conforme as fotos","Envio para todo o Brasil, com frete calculado no fechamento","Quer outra cor ou tamanho? Fale com a gente pelo WhatsApp"]
+  :["Arquivo digital (STL) pronto para fatiar e imprimir","Detalhes: "+x.d,"Liberado por e-mail após o pagamento","Atenção: produto 100% digital, é necessário ter uma impressora 3D"];
+}
+function drawProduct(id){
+  var x=byId(id),m=mediaOf(x),f=favs.indexOf(x.id)>-1;
+  if(gi>=m.length)gi=0;
+  var stage=m.length?(isVid(m[gi])?'<video src="'+m[gi]+'" controls playsinline></video>':'<img src="'+m[gi]+'" alt="'+x.n+'"'+(gi===0?zoom(x,"50% 49%"):'')+'>'):x.e;
+  var nav=m.length>1?'<button class="gnav l" data-gn="-1" aria-label="Anterior">‹</button><button class="gnav r" data-gn="1" aria-label="Próxima">›</button><span class="gcount">'+(gi+1)+' / '+m.length+'</span>':'';
+  var th=m.length>1?'<div class="thumbs">'+m.map(function(u,i){return '<button data-g="'+i+'" aria-pressed="'+(i===gi)+'" aria-label="Mídia '+(i+1)+'"'+(isVid(u)?'>▶':' style="background-image:url(\''+u+'\')">')+'</button>'}).join("")+'</div>':'';
+  var rel=P.filter(function(p){return p.id!==x.id}).sort(function(a,b){return ((b.t===x.t)-(a.t===x.t))||a.n.localeCompare(b.n,"pt-BR")}).slice(0,4);
+  $("viewProd").innerHTML='<p class="crumb"><a href="#">Início</a> / <a href="#loja" data-c="'+x.c+'">'+x.c+'</a> / '+x.n+'</p>'+
+  '<div class="pgrid"><div class="gal"><div class="stage" style="background:linear-gradient(180deg,#15171e,#0a0b10)">'+stage+nav+'</div>'+th+'</div>'+
+  '<div class="pinfo"><span class="ctag">'+x.c+'</span><h1>'+x.n+'</h1><div class="pprice">'+brl(x.p)+(x.old?'<s>'+brl(x.old)+'</s>':'')+'</div>'+
+  '<div class="pbox"><b>'+x.n+'</b> · '+(x.t==="stl"?"Arquivo digital STL":"Modelo físico impresso")+'<br>'+(x.t==="stl"?"Download liberado por e-mail após o pagamento":"Frete calculado no fechamento do pedido")+'</div>'+
+  '<div class="pbtns"><button class="cta" data-id="'+x.id+'">Adicionar ao carrinho</button><button class="fav2" data-f="'+x.id+'" aria-pressed="'+f+'" aria-label="Favoritar">♥</button></div>'+
+  '<div class="desc"><h3>Descrição</h3><ul>'+descOf(x).map(function(l){return '<li>'+l+'</li>'}).join("")+'</ul></div></div></div>'+
+  '<div class="rel"><h2>Você também pode gostar</h2><div class="grid">'+rel.map(cardHtml).join("")+'</div></div>';
+  document.title=x.n+" – StudioMP3D";
+}
+function route(){
+  var h=location.hash,m=h.match(/^#p\/(\d+)$/),x=m&&byId(m[1]);
+  if(x){if(curP!==x.id)gi=0;curP=x.id;$("viewShop").hidden=true;$("viewProd").hidden=false;drawProduct(x.id);window.scrollTo(0,0);return}
+  curP=0;$("viewProd").hidden=true;$("viewShop").hidden=false;document.title="StudioMP3D – Arquivos STL e modelos impressos em 3D";
+  var el=h.length>1&&document.getElementById(h.slice(1));
+  if(el)el.scrollIntoView();else window.scrollTo(0,0);
+}
+window.addEventListener("hashchange",route);
+
+drawMenu();drawGrid();drawCart();route();
+</script>
+</body>
+</html>
